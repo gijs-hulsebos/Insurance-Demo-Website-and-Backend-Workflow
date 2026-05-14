@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'N8N-api-key': apiKey,
+        'n8n_api_key': apiKey,
       },
       body: JSON.stringify(data),
     });
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
       let errorMsg = 'Webhook execution failed';
       if (res.status === 404) errorMsg = 'n8n webhook is not active or listening. Make sure to click "Test Workflow" or toggle the workflow to Active.';
-      else if (res.status === 403) errorMsg = `n8n authentication failed (403). Sent Header 'N8N-api-key' with a value of length ${apiKey?.length} (starts with: '${apiKey?.substring(0, 4)}...'). Please verify the Header Name in n8n matches EXACTLY and the value matches EXACTLY without extra spaces.`;
+      else if (res.status === 403) errorMsg = `n8n authentication failed (403). Sent Header 'n8n_api_key' with a value of length ${apiKey?.length} (starts with: '${apiKey?.substring(0, 4)}...'). Please verify the Header Name in n8n matches EXACTLY and the value matches EXACTLY without extra spaces.`;
       else if (res.status === 500) errorMsg = 'Workflow execution failed inside n8n. Check your n8n execution logs.';
 
       return NextResponse.json({ error: errorMsg, status: res.status, details: responseText }, { status: res.status });
