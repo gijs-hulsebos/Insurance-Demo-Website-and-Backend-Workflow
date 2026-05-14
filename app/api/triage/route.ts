@@ -5,12 +5,12 @@ export async function POST(req: Request) {
     const data = await req.json();
     console.log('[API] Processing new triage submission, calling n8n backend...');
     
-    const rawApiKey = process.env.N8N_API_KEY || process.env.N8N_api_key;
+    const rawApiKey = process.env.n8n_api_key;
     const apiKey = rawApiKey?.trim();
     if (!apiKey) {
-      console.error('[API] Error: N8N API Key is missing. Please ensure the N8N_API_KEY environment variable/secret is set.');
+      console.error('[API] Error: n8n_api_key is missing. Please ensure the n8n_api_key environment variable/secret is set.');
       return NextResponse.json(
-        { error: 'N8N API Key is missing. Please ensure the N8N_API_KEY or N8N_api_key environment variable/secret is set.' },
+        { error: 'n8n API Key is missing. Please ensure the n8n_api_key environment variable/secret is set.' },
         { status: 500 }
       );
     }
