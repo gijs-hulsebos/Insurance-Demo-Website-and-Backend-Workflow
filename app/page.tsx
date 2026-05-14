@@ -26,6 +26,8 @@ type ClaimResult = {
   urgency_reasoning: string;
   confidence_score: string;
   technical_summary: string;
+  escalation_required?: string;
+  escalation_reasoning?: string;
 };
 
 export default function Home() {
@@ -488,6 +490,18 @@ export default function Home() {
                        <hr className="border-slate-100" />
                        
                        <div className="space-y-6">
+                         {claimResult.escalation_required?.toLowerCase() === 'yes' && (
+                           <div className="bg-red-50 border border-red-200 rounded-lg p-5">
+                             <h4 className="text-sm font-bold text-red-900 flex items-center gap-2 mb-2">
+                               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-100">
+                                 <div className="h-2 w-2 rounded-full bg-red-600 animate-pulse"></div>
+                               </span>
+                               Escalation Required
+                             </h4>
+                             <p className="text-red-800 text-sm leading-relaxed">{claimResult.escalation_reasoning}</p>
+                           </div>
+                         )}
+
                          <div>
                             <h4 className="text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
                               <Activity className="h-4 w-4 text-blue-600" /> Urgency Reasoning
@@ -502,9 +516,20 @@ export default function Home() {
                               <Cpu className="h-4 w-4 text-purple-600" /> Technical Summary
                             </h4>
                             <div className="bg-slate-50 border border-slate-100 rounded-lg p-4">
-                               <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{claimResult.technical_summary}</p>
+                               <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{claimResult.technical_summary || "No technical summary provided."}</p>
                             </div>
                          </div>
+
+                         <details className="group border border-slate-200 rounded-lg bg-white overflow-hidden">
+                            <summary className="text-sm font-semibold text-slate-700 cursor-pointer p-4 bg-slate-50 hover:bg-slate-100 flex items-center gap-2 transition-colors">
+                              <Workflow className="h-4 w-4 text-slate-500" /> Debug: Raw Webhook Data
+                            </summary>
+                            <div className="bg-slate-900 border-t border-slate-200 p-4 overflow-x-auto">
+                               <pre className="text-emerald-400 text-xs leading-relaxed font-mono whitespace-pre-wrap">
+                                 {JSON.stringify(claimResult, null, 2)}
+                               </pre>
+                            </div>
+                         </details>
 
                          <div>
                             <h4 className="text-sm font-semibold text-slate-900 mb-4 flex items-center gap-2 mt-4">

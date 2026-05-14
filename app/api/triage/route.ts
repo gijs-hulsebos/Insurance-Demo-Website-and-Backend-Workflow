@@ -17,8 +17,7 @@ export async function POST(req: Request) {
     
     console.log('API Key Length:', apiKey.length);
 
-    // Attempt the test webhook first
-    let res = await fetch('https://gijs-hulsebos.app.n8n.cloud/webhook-test/d7c96957-0b16-41b5-8084-dc0bd128301c', {
+    const res = await fetch('https://gijs-hulsebos.app.n8n.cloud/webhook/d7c96957-0b16-41b5-8084-dc0bd128301c', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,20 +26,6 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify(data),
     });
-
-    // If test webhook is inactive, n8n returns 404. Fall back to the production webhook.
-    if (!res.ok && res.status === 404) {
-      console.log('[API] Test webhook not found (404), trying production webhook...');
-      res = await fetch('https://gijs-hulsebos.app.n8n.cloud/webhook/d7c96957-0b16-41b5-8084-dc0bd128301c', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'N8N-api-key': apiKey,
-        },
-        body: JSON.stringify(data),
-      });
-    }
 
     const responseText = await res.text();
     let responseData;
@@ -73,6 +58,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: errorMsg, status: res.status, details: responseText }, { status: res.status });
     }
 
+    if (Array.isArray(responseData) && responseData.length > 0) {
+      responseData = responseData[0];
+    }
+    
     return NextResponse.json(responseData);
   } catch (error) {
     console.error('[API] Fatal Error during triage processing:', error);
