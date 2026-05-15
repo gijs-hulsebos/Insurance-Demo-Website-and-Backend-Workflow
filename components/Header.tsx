@@ -14,7 +14,7 @@ export function Header() {
           {[
             { name: 'Product', path: '/product' },
             { name: 'Integrations', path: '/integrations' },
-            { name: 'Security', path: '/security' },
+            { name: 'Gallery', path: '/gallery' },
             { name: 'About', path: '/about' }
           ].map((item) => (
             <Link key={item.name} href={item.path} className="text-sm font-medium text-slate-600 hover:text-[#00205B] transition-colors">
