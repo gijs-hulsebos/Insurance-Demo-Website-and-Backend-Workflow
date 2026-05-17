@@ -56,11 +56,14 @@ const nextConfig: NextConfig = {
                    "frame-src https://drive.google.com; " + // Allows Google Drive iframes
                    "upgrade-insecure-requests;",
           },
-          // {
-          //   // Commented out for AI Studio preview (which uses an iframe)
-          //   key: "X-Frame-Options",
-          //   value: "DENY",
-          // },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "Expect-CT",
+            value: "max-age=86400, enforce",
+          },
           {
             key: "X-Content-Type-Options",
             value: "nosniff",

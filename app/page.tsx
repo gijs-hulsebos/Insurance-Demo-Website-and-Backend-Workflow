@@ -16,18 +16,23 @@ import {
   Cpu,
   ImagePlus,
   X,
-  Clock
+  Clock,
+  ShieldCheck
 } from 'lucide-react';
 
 type ClaimResult = {
-  status: string;
-  policy_number: string;
-  urgency_level: string | number;
-  urgency_reasoning: string;
-  confidence_score: string;
-  technical_summary: string;
+  status?: string;
+  policy_number?: string;
+  urgency_level?: string | number;
+  urgency_label?: string | number;
+  urgency_reasoning?: string;
+  confidence_score?: string;
+  confidence?: string;
+  technical_summary?: string;
+  assessment?: string;
   escalation_required?: string;
   escalation_reasoning?: string;
+  next_step?: string;
 };
 
 export default function Home() {
@@ -419,6 +424,32 @@ export default function Home() {
                           <p className="text-red-500 text-sm font-medium w-full text-right">{errorMsg}</p>
                         )}
                       </div>
+                      
+                      <AnimatePresence>
+                        {submitStage === 'executing' && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2 shadow-sm relative z-0">
+                              <div className="bg-emerald-100 p-2 rounded-full shrink-0 mt-1 sm:mt-0">
+                                <ShieldCheck className="h-6 w-6 text-emerald-600" />
+                              </div>
+                              <div className="space-y-1.5">
+                                <h4 className="text-sm font-bold text-emerald-900">Compliance & Privacy Assured</h4>
+                                <p className="text-xs text-emerald-800 leading-relaxed">
+                                  <strong className="font-semibold text-emerald-900">EU AI Act (Human-in-the-Loop):</strong> This AI triaging system is strictly advisory. All automated suggestions have been queued for mandatory review by a certified human adjuster before execution. <span className="font-semibold underline underline-offset-2">The participant will receive an email once the human-in-the-loop system review has been completed.</span>
+                                </p>
+                                <p className="text-xs text-emerald-800 leading-relaxed">
+                                  <strong className="font-semibold text-emerald-900">GDPR (Data Minimization):</strong> No Personally Identifiable Information (PII) inclusive of name or email address was transmitted to or processed by the Large Language Model.
+                                </p>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </form>
                   </div>
                 </motion.div>
@@ -461,22 +492,22 @@ export default function Home() {
                           <div className="space-y-2">
                              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Urgency Level</p>
                              <div>
-                                {String(claimResult.urgency_level) === '1' && (
+                                {String(claimResult.urgency_level || claimResult.urgency_label) === '1' && (
                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800 border border-green-200">
                                       <div className="w-2 h-2 rounded-full bg-green-600"></div> Low
                                    </span>
                                 )}
-                                {String(claimResult.urgency_level) === '2' && (
+                                {String(claimResult.urgency_level || claimResult.urgency_label) === '2' && (
                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">
                                       <div className="w-2 h-2 rounded-full bg-yellow-600"></div> Medium
                                    </span>
                                 )}
-                                {String(claimResult.urgency_level) === '3' && (
+                                {String(claimResult.urgency_level || claimResult.urgency_label) === '3' && (
                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800 border border-red-200">
                                       <div className="w-2 h-2 rounded-full bg-red-600"></div> High
                                    </span>
                                 )}
-                                {!['1', '2', '3'].includes(String(claimResult.urgency_level)) && (
+                                {!['1', '2', '3'].includes(String(claimResult.urgency_level || claimResult.urgency_label)) && (
                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold bg-slate-100 text-slate-800 border border-slate-200">
                                       <div className="w-2 h-2 rounded-full bg-slate-600"></div> Unknown
                                    </span>
@@ -487,7 +518,7 @@ export default function Home() {
                           <div className="space-y-2">
                              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">AI Confidence</p>
                              <div className="flex items-end gap-2">
-                               <p className="text-2xl font-bold text-[#00205B]">{claimResult.confidence_score}%</p>
+                               <p className="text-2xl font-bold text-[#00205B]">{claimResult.confidence_score || claimResult.confidence}%</p>
                              </div>
                           </div>
                        </div>
@@ -506,24 +537,40 @@ export default function Home() {
                              <p className="text-red-800 text-sm leading-relaxed">{claimResult.escalation_reasoning}</p>
                            </div>
                          )}
-
-                         <div>
-                            <h4 className="text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
-                              <Activity className="h-4 w-4 text-blue-600" /> Urgency Reasoning
-                            </h4>
-                            <div className="bg-slate-50 border border-slate-100 rounded-lg p-4">
-                               <p className="text-slate-700 text-sm leading-relaxed">{claimResult.urgency_reasoning}</p>
-                            </div>
-                         </div>
                          
-                         <div>
-                            <h4 className="text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
-                              <Cpu className="h-4 w-4 text-purple-600" /> Technical Summary
-                            </h4>
-                            <div className="bg-slate-50 border border-slate-100 rounded-lg p-4">
-                               <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{claimResult.technical_summary || "No technical summary provided."}</p>
-                            </div>
-                         </div>
+                         {claimResult.status?.replace('_', ' ') === 'Manual Review Required' && (
+                           <div className="bg-orange-50 border border-orange-200 rounded-lg p-5">
+                             <h4 className="text-sm font-bold text-orange-900 flex items-center gap-2 mb-2">
+                               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-100">
+                                 <div className="h-2 w-2 rounded-full bg-orange-600 animate-pulse"></div>
+                               </span>
+                               Manual Review Required
+                             </h4>
+                             <p className="text-orange-800 text-sm leading-relaxed">{claimResult.next_step}</p>
+                           </div>
+                         )}
+
+                         {(claimResult.urgency_reasoning || claimResult.assessment) && (
+                           <div>
+                              <h4 className="text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
+                                <Activity className="h-4 w-4 text-blue-600" /> Assessment & Reasoning
+                              </h4>
+                              <div className="bg-slate-50 border border-slate-100 rounded-lg p-4">
+                                 <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{claimResult.assessment || claimResult.urgency_reasoning}</p>
+                              </div>
+                           </div>
+                         )}
+                         
+                         {claimResult.technical_summary && (
+                           <div>
+                              <h4 className="text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
+                                <Cpu className="h-4 w-4 text-purple-600" /> Technical Summary
+                              </h4>
+                              <div className="bg-slate-50 border border-slate-100 rounded-lg p-4">
+                                 <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{claimResult.technical_summary}</p>
+                              </div>
+                           </div>
+                         )}
 
                          <details className="group border border-slate-200 rounded-lg bg-white overflow-hidden">
                             <summary className="text-sm font-semibold text-slate-700 cursor-pointer p-4 bg-slate-50 hover:bg-slate-100 flex items-center gap-2 transition-colors">
@@ -577,6 +624,7 @@ export default function Home() {
                             </div>
                          </div>
                        </div>
+
                     </div>
                   </div>
                 </motion.div>

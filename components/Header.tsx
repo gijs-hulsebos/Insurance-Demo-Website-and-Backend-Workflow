@@ -14,8 +14,8 @@ export function Header() {
           {[
             { name: 'Product', path: '/product' },
             { name: 'Integrations', path: '/integrations' },
-            { name: 'Gallery', path: '/gallery' },
-            { name: 'About', path: '/about' }
+            { name: 'Demo', path: '/demo' },
+            { name: 'Security', path: '/security' }
           ].map((item) => (
             <Link key={item.name} href={item.path} className="text-sm font-medium text-slate-600 hover:text-[#00205B] transition-colors">
               {item.name}
@@ -24,11 +24,8 @@ export function Header() {
         </nav>
         
         <div className="flex items-center gap-4">
-          <Link href="/contact" className="hidden sm:inline-flex px-4 py-2 text-sm font-medium text-slate-600 hover:text-[#00205B] transition-colors">
-            Contact Support
-          </Link>
           <button className="inline-flex rounded-md bg-[#00205B] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#00205B] focus:ring-offset-2">
-            Claim Status
+            Claim Demo
           </button>
         </div>
       </div>
