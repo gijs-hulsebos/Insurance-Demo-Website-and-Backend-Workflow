@@ -210,25 +210,26 @@ export default function Home() {
                       type="button"
                       onClick={(e) => {
                         e.preventDefault();
+                        const driveFiles = process.env.NEXT_PUBLIC_GOOGLE_DRIVE_IDS?.split(',') || [];
                         const demoClaims = [
                           {
-                            src: 'https://drive.google.com/file/d/1_tvVPWWS84ZZvVHhqBfzKQe22OCfdiJ5/preview',
+                            src: `https://drive.google.com/file/d/${driveFiles[1] || ''}/preview`,
                             desc: "I swerved to avoid debris and accidentally backed into a utility pole. The rear bumper is completely dented and the taillight is broken."
                           },
                           {
-                            src: 'https://drive.google.com/file/d/1fS7kbj37mI5Ut1GcV8PBq7wdKBuEPW53/preview',
+                            src: `https://drive.google.com/file/d/${driveFiles[4] || ''}/preview`,
                             desc: "A rock fell from the mountain onto my windshield while I was driving and completely shattered it. Luckily no one was hurt, but visibility is zero."
                           },
                           {
-                            src: 'https://drive.google.com/file/d/1b0w2592lBmbFwKxM6ooBcbPSNsyi8z2t/preview',
+                            src: `https://drive.google.com/file/d/${driveFiles[0] || ''}/preview`,
                             desc: "I was rear-ended at a stoplight, which pushed my car into the vehicle in front of me. Extensive front-end damage to the hood and grille."
                           },
                           {
-                            src: 'https://drive.google.com/file/d/1cAgshUZC8HszjnGIaN8ui_UP_z9QJSTd/preview',
+                            src: `https://drive.google.com/file/d/${driveFiles[2] || ''}/preview`,
                             desc: "It was raining heavily, the car hydroplaned, and I ended up sliding off the road into a tree. The front is totally crushed."
                           },
                           {
-                            src: 'https://drive.google.com/file/d/1SGk5RKR6PNyaCx45cJmDUaAEWxMz-GXe/preview',
+                            src: `https://drive.google.com/file/d/${driveFiles[3] || ''}/preview`,
                             desc: "I drove over some construction debris on the highway and a large nail severely punctured my front right tire, causing an immediate blowout."
                           },
                           // Low risk examples

@@ -37,6 +37,50 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            // Note: frame-ancestors 'none' is removed from this preview to allow AI Studio to embed the app
+            value: "default-src 'self'; " +
+                   "script-src 'self' 'unsafe-eval' 'unsafe-inline'; " +
+                   "style-src 'self' 'unsafe-inline'; " +
+                   "img-src 'self' blob: data: https://drive.google.com https://*.googleusercontent.com https://placehold.co https://picsum.photos; " +
+                   "font-src 'self'; " +
+                   "object-src 'none'; " +
+                   "base-uri 'self'; " +
+                   "form-action 'self'; " +
+                   "frame-src https://drive.google.com; " + // Allows Google Drive iframes
+                   "upgrade-insecure-requests;",
+          },
+          // {
+          //   // Commented out for AI Studio preview (which uses an iframe)
+          //   key: "X-Frame-Options",
+          //   value: "DENY",
+          // },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains; preload",
+          },
+        ],
+      },
+    ];
+  },
   output: 'standalone',
   transpilePackages: ['motion'],
   webpack: (config, {dev}) => {

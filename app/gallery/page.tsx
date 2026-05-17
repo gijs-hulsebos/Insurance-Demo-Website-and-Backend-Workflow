@@ -4,33 +4,35 @@ import { motion } from 'motion/react';
 import { Camera, AlertTriangle } from 'lucide-react';
 import Image from 'next/image';
 
+const driveFiles = process.env.NEXT_PUBLIC_GOOGLE_DRIVE_IDS?.split(',') || [];
+
 const dataset = [
   {
-    id: '1b0w2592lBmbFwKxM6ooBcbPSNsyi8z2t',
+    id: driveFiles[0] || '',
     name: 'Vehicle collision Front .jpg',
     title: 'Frontal Collision',
     description: 'Extensive front-end damage to the hood and grille following a collision.'
   },
   {
-    id: '1_tvVPWWS84ZZvVHhqBfzKQe22OCfdiJ5',
+    id: driveFiles[1] || '',
     name: 'Vehicle Collision Pole.jpg',
     title: 'Utility Pole Collision',
     description: 'Rear bumper and taillight damage after backing into a utility pole.'
   },
   {
-    id: '1cAgshUZC8HszjnGIaN8ui_UP_z9QJSTd',
+    id: driveFiles[2] || '',
     name: 'Vehicle collision tree.jpg',
     title: 'Tree Collision',
     description: 'Severe front-end crush damage after hydroplaning into a tree.'
   },
   {
-    id: '1SGk5RKR6PNyaCx45cJmDUaAEWxMz-GXe',
+    id: driveFiles[3] || '',
     name: 'Vehicle flat tire by nail.jpg',
     title: 'Flat Tire (Nail)',
     description: 'Severe puncture to the tire caused by running over construction debris.'
   },
   {
-    id: '1fS7kbj37mI5Ut1GcV8PBq7wdKBuEPW53',
+    id: driveFiles[4] || '',
     name: 'Windshield broke stone.jpeg',
     title: 'Shattered Windshield',
     description: 'Windshield shattered completely due to a falling rock while driving.'
