@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { ArrowLeft, Cpu, Cloud, Code, GitMerge, AlertCircle, Database } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowLeft, Cpu, Cloud, Code, GitMerge, AlertCircle, Database, Github } from 'lucide-react';
+import { ZoomableImage } from '@/components/ZoomableImage';
 
 export default function IntegrationsPage() {
   return (
@@ -28,9 +30,21 @@ export default function IntegrationsPage() {
               <Cloud className="h-6 w-6 text-sky-600" />
               Automation with N8N
             </h2>
-            <p>
+            <p className="mb-6">
               We utilize <strong>n8n</strong>, a powerful workflow automation tool, to orchestrate complex backend logic. This enables seamless connection between the AI inference layer, our internal tool functions, and destination data sinks.
             </p>
+            <ZoomableImage 
+              src="https://raw.githubusercontent.com/gijs-hulsebos/n8n-automation/main/Insurance-Demo/Image%2017-05-2026%20at%2020.43.jpeg" 
+              alt="n8n Automation Workflow" 
+            />
+            <a 
+              href="https://github.com/gijs-hulsebos/n8n-automation/tree/main/Insurance-Demo" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-lg font-medium transition-colors text-sm"
+            >
+              <Github className="h-4 w-4" /> View GitHub Repository
+            </a>
           </section>
 
           <section>
@@ -51,7 +65,7 @@ export default function IntegrationsPage() {
             </h2>
             <p>
               Robust error boundaries and explicit <strong>Risk Routes</strong> are defined to catch anomalies. 
-              If the LLM returns unstructured text instead of requested JSON, or if the confidence score drops below the established threshold, the system triggers a fallback route—automatically assigning highest manual review precedence.
+              If the LLM returns unstructured text instead of requested JSON, or if the confidence score drops below the established threshold, the system triggers a fallback route, automatically assigning highest manual review precedence.
             </p>
           </section>
 

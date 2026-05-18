@@ -35,6 +35,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async headers() {
@@ -48,7 +54,7 @@ const nextConfig: NextConfig = {
             value: "default-src 'self'; " +
                    "script-src 'self' 'unsafe-eval' 'unsafe-inline'; " +
                    "style-src 'self' 'unsafe-inline'; " +
-                   "img-src 'self' blob: data: https://drive.google.com https://*.googleusercontent.com https://placehold.co https://picsum.photos; " +
+                   "img-src 'self' blob: data: https://drive.google.com https://*.googleusercontent.com https://placehold.co https://picsum.photos https://raw.githubusercontent.com; " +
                    "font-src 'self'; " +
                    "object-src 'none'; " +
                    "base-uri 'self'; " +

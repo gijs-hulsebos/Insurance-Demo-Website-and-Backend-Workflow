@@ -193,7 +193,7 @@ export default function Home() {
         </section>
 
         {/* Triage Portal Section */}
-        <section ref={triageRef} className="py-24 bg-slate-50 w-full">
+        <section id="claim-form" ref={triageRef} className="py-24 bg-slate-50 w-full">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
               {!claimResult ? (

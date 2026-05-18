@@ -24,9 +24,9 @@ export function Header() {
         </nav>
         
         <div className="flex items-center gap-4">
-          <button className="inline-flex rounded-md bg-[#00205B] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#00205B] focus:ring-offset-2">
+          <Link href="/#claim-form" className="inline-flex rounded-md bg-[#00205B] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#00205B] focus:ring-offset-2">
             Claim Demo
-          </button>
+          </Link>
         </div>
       </div>
     </header>
